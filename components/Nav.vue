@@ -24,6 +24,8 @@
             this.$router.push({ path: '/home' })
           } else if (this.$route.path === '/user/todoList') {
             this.$router.push({ path: '/home' })
+          } else if (this.$route.path === '/user/selectTodo') {
+            this.$router.push({ path: '/home' })
           }
         }
       }

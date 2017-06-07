@@ -28,7 +28,9 @@ const createStore = () => {
       }
     },
     getters: {
-      todos: state => { return state.todos }
+      selectTodo: state => {
+        return state.todos.filter(todo => todo.title)
+      }
     }
   })
 }

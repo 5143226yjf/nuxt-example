@@ -9,13 +9,19 @@
             <div class="list" id="content">内容
               <div class="show-content">{{list.content}}</div>
             </div>
-            <button class="complete" @click="$store.commit('completeTodo',`${index}`)">完成</button>
+            <button class="complete" @click="complete(`${index}`)">完成</button>
           </li>
         </ul>
       </div>
-      <div class="clear">
-        <button class="clear-btn" @click="$store.commit('deleteTodo')">清空</button>
+      <div class="clear" v-show="!isShow">
+        <button class="clear-btn" @click="clear">清空</button>
       </div>
+      <transition name="test">
+        <div class="none" v-if="isShow">
+          <img src="~static/none.png"/>
+          <p>空空如也～</p>
+        </div>
+      </transition>
     </div>
 </template>
 <script>
@@ -26,11 +32,34 @@
     components: {
       Navigation
     },
+    mounted: function () {
+      if (this.$store.state.todos.length === 0) {
+        this.isShow = true
+      }
+    },
+    transition: {
+      name: 'test',
+      mode: 'out-in'
+    },
+    scrollToTop: true,
     data () {
       return {
+        isShow: false,
         todos: this.$store.state.todos,
         msg: 'TODO列表',
         path: '/home'
+      }
+    },
+    methods: {
+      complete (index) {
+        this.$store.commit('completeTodo', index)
+        if (this.$store.state.todos.length === 0) {
+          this.isShow = true
+        }
+      },
+      clear () {
+        this.$store.commit('deleteTodo')
+        this.isShow = true
       }
     }
   }
@@ -40,15 +69,13 @@
   .todo-list{
     width: 100%;
     height: 100%;
+    margin-top: 80px;
   }
   .todo-content{
     width: 90%;
     max-height: 550px;
-    margin: 100px auto
   }
   ul{
-    width: 80%;
-    margin: 20px auto;
     clear: both;
   }
   li{
@@ -113,5 +140,19 @@
     font-size: 20px;
     outline: none;
   }
-
+  .none{
+    width: 150px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .none img{
+    width: 150px;
+    height: 150px;
+  }
+  .none p{
+    height: 20px;
+    margin-top: 20px;
+    color: #42b983;
+    font-size: 20px;
+  }
 </style>

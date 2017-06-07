@@ -4,6 +4,7 @@
     <div class="user-content">
       <nuxt-link to="/user/addTodo">添加todo</nuxt-link>
       <nuxt-link to="/user/todoList">todo列表</nuxt-link>
+      <nuxt-link to="/user/selectTodo">搜索todo</nuxt-link>
     </div>
   </div>
 </template>
